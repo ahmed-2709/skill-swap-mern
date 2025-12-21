@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middlewares
 app.use(cors({
-  origin: "*",        
+  origin: "https://skill-swap-mern.vercel.app",        
   credentials: true
 }));
 app.use(express.json());
