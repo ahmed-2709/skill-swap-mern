@@ -7,6 +7,7 @@ import Loader from "../../components/loader";
 
 
 const Dashboard = ()=> {
+      const apiUrl = import.meta.env.VITE_APP_API_URL;
     const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(true);
       const {  logout } = useAuth();
@@ -26,7 +27,7 @@ const Dashboard = ()=> {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/dashboard/", {
+        const res = await axios.get(`${apiUrl}api/dashboard/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setStats(res.data.stats);

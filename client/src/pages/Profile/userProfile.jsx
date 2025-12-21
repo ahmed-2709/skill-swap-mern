@@ -5,6 +5,7 @@ import Loader from "../../components/loader";
 
 
 const Profile = () => {
+        const apiUrl = import.meta.env.VITE_APP_API_URL;
   const [offeredSkills, setOfferedSkills] = useState("");
   const [desiredSkills, setDesiredSkills] = useState("");
   const [bio, setBio] = useState("");
@@ -15,7 +16,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/profile/me", {
+        const res = await axios.get(`${apiUrl}api/profile/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -42,7 +43,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5000/api/profile/create",
+        `${apiUrl}api/profile/create`,
         { offeredSkills, desiredSkills, bio },
         { headers: { Authorization: `Bearer ${token}` } }
       );

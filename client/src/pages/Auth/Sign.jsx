@@ -21,7 +21,7 @@ const Signup = ({ onSwitch }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", formData);
+      const res = await axios.post('${apiUrl}api/auth/register', formData);
       localStorage.setItem("token", res.data.token);
       login(res.data.token, res.data.user);  // assuming backend sends { token, user }
       toast.success("Signup successful!");

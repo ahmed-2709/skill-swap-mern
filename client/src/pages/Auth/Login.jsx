@@ -9,6 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 
 const Login = ({ onSwitch }) => {
     console.log("onSwitch in Login:", onSwitch);
+    const apiUrl = import.meta.env.VITE_APP_API_URL;
   const [formData, setFormData] = useState({ email: "", password: "" });
    const navigate = useNavigate();
    const { login } = useAuth();
@@ -19,7 +20,7 @@ const Login = ({ onSwitch }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", formData);
+      const res = await axios.post(`${apiUrl}api/auth/login`, formData);
       login(res.data.token, res.data.user);  // assuming backend sends { token, user }
       toast.success("Login successful!");
       navigate("/dashboard");
