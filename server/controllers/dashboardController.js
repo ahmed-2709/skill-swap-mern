@@ -6,7 +6,7 @@ try {
         const myProfile = await UserProfile.findOne({ userId: req.user });
         if(!myProfile)
         {
-           return res.status(404).json({message: "Profile not found!"});
+           return res.status(204).json({message: "Profile not found!"});
         }
 
         const suggestedUsers = await UserProfile.find({
