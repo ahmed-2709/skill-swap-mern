@@ -34,8 +34,13 @@ const Dashboard = ()=> {
         setSuggestedUsers(res.data.suggestedUsers);
         setRecentActivity(res.data.recentActivity);
       } catch (err) {
-          navigate("/login");
-        console.error(err);
+        if (err.response?.status === 204) {
+    setStats({});
+    setSuggestedUsers([]);
+    setRecentActivity([]);
+  } else {
+     navigate("/login");
+        }
       } finally {
         setLoading(false); // stop loader
       }
@@ -135,11 +140,11 @@ const Dashboard = ()=> {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div className="bg-white shadow rounded-lg p-4">
               <h3 className="text-gray-600">Skills Offered</h3>
-              <p className="text-2xl font-bold">{stats.offeredCount}</p>
+              <p className="text-2xl font-bold">{stats?.offeredCount ?? 0}</p>
             </div>
             <div className="bg-white shadow rounded-lg p-4">
               <h3 className="text-gray-600">Skills Wanted</h3>
-              <p className="text-2xl font-bold">{stats.desiredCount}</p>
+              <p className="text-2xl font-bold">{stats?.desiredCount ?? 0}</p>
             </div>
             <div className="bg-white shadow rounded-lg p-4">
               <h3 className="text-gray-600">Requests</h3>
@@ -150,7 +155,7 @@ const Dashboard = ()=> {
           {/* Suggested Users */}
           <div className="mb-6">
             <h3 className="text-xl font-bold mb-3">Suggested Users</h3>
-  {suggestedUsers.length > 0 ? (
+  {suggestedUsers?.length > 0 ? (
           suggestedUsers.map((user) => (
             <div key={user._id} className="p-4 mb-3 border rounded shadow hover:bg-gray-100">
               <p><strong>Bio:</strong> {user.bio}</p>
@@ -160,7 +165,7 @@ const Dashboard = ()=> {
           ))
         ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[1, 2, 3].map((user) => (
+              {['David', 'Zara', 'Adnan'].map((user) => (
                 <div key={user} className="bg-white p-4 rounded-lg shadow">
                   <img
                     src={`https://i.pravatar.cc/150?img=${user}`}
@@ -183,7 +188,7 @@ const Dashboard = ()=> {
           {/* Recent Activity */}
           <div>
             <h3 className="text-xl font-bold mb-3">Recent Activity</h3>
-{recentActivity.length > 0 ? (
+// {recentActivity?.length > 0 ? (
           recentActivity.map((act, idx) => (
             <div key={idx} className="p-3 shadow mb-2 bg-white rounded-lg divide-y">
               <p>✅ {act.message}</p>
